@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Используйте Maven для сборки проекта
                 sh 'mvn clean install'
             }
         }
