@@ -1,10 +1,22 @@
+
 pipeline {
-    agent any
+    agent any;
 
     stages {
-        stage('Build') {
+        stage("Build") {
             steps {
-                sh 'mvn clean install'
+                echo 'Building...'
+                bat """
+                    mvn clean install -DskipTests=true
+                """
+            }
+        }
+        stage("Test") {
+            steps {
+                echo 'Testing...'
+                bat """
+                    mvn test -Dsurefire.useFile=false
+                """
             }
         }
     }
