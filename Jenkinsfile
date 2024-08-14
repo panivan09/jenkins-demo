@@ -32,7 +32,7 @@ pipeline {
                 // Запуск приложения
                 bat """
                     cd D:\\Workspace\\Jenkins\\deployments
-                    java -jar jenkins-demo-0.0.1-SNAPSHOT.jar
+                    start C:\\Program Files\\Common Files\\Oracle\\Java\\javapath\\java.exe -jar jenkins-demo-0.0.1-SNAPSHOT.jar
                 """
             }
         }
