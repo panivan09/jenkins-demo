@@ -33,7 +33,7 @@ pipeline {
                 bat """
                     cd D:\\Workspace\\Jenkins\\deployments
                     echo Starting application...
-                    run java -jar jenkins-demo-0.0.1-SNAPSHOT.jar
+                    start java -jar jenkins-demo-0.0.1-SNAPSHOT.jar
                     echo Application finished with error code %ERRORLEVEL%
                 """
             }
