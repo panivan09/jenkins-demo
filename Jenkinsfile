@@ -20,14 +20,14 @@ pipeline {
             }
         }
 
-        stages("Test SSH connection") {
-             steps {
-                  // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
-                  def remoteCommand = "ssh -o StrictHostKeyChecking=no panivan09@raspberry.local 'uname -a'"
-             }
 
+        stage('Test SSH Connection') {
+            steps {
+                // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
+                def remoteCommand = "ssh -o StrictHostKeyChecking=no panivan09@raspberry.local 'uname -a'"
+            }
         }
-
+        
 
         //stage("Deploy") {
         //    steps {
