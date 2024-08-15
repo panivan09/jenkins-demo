@@ -22,22 +22,16 @@ pipeline {
 
         stage("Deploy") {
             steps {
-                echo 'Deploying...'
+                echo 'Deploying to Raspberry Pi...'
+                // Копирование файла на Raspberry Pi
+                bat """
+                    scp target/jenkins-demo-0.0.1-SNAPSHOT.jar panivan09@raspberry.local:/home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar
+                """
 
-                echo 'Stopping existing service...'
-                script {
-                    try {
-                        bat 'sc stop JenkinsDemoService'
-                    } catch (Exception e) {
-                        echo 'Service not running or failed to stop: ' + e.getMessage()
-                    }
-                }
-
-                echo 'Copying new jar...'
-                bat 'copy target\\jenkins-demo-0.0.1-SNAPSHOT.jar D:\\Workspace\\Jenkins\\deployments\\jenkins-demo-0.0.1-SNAPSHOT.jar'
-
-                echo 'Starting service...'
-                bat 'sc start JenkinsDemoService'
+                // Запуск приложения на Raspberry Pi
+                bat """
+                    ssh panivan09@raspberry.local 'nohup java -jar /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar > /home/panivan09/deployments/jenkins-demo-app.log 2>&1 &'
+                """
             }
         }
     }
