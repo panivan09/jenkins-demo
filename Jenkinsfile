@@ -25,7 +25,7 @@ pipeline {
             steps {
                 // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
                 bat """
-                    ssh panivan09@raspberry.local
+                    ssh -T panivan09@raspberry.local 'uname -a'
                 """
             }
         }
