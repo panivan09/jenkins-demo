@@ -30,28 +30,28 @@ pipeline {
                 """
 
                 // Запуск приложения
-                //bat """
-                //    cd D:\\Workspace\\Jenkins\\deployments
-                //    echo Starting application...
-                //    start java -jar jenkins-demo-0.0.1-SNAPSHOT.jar
-                //    echo Application finished with error code %ERRORLEVEL%
-                //"""
+                bat """
+                    cd /d D:\\Workspace\\Jenkins\\deployments
+                    echo Starting application...
+                    start java -jar jenkins-demo-0.0.1-SNAPSHOT.jar
+                    echo Application finished with error code %ERRORLEVEL%
+                """
 
                 //bat """
                 //    cd D:\\Workspace\\Jenkins\\deployments
                 //    start /B run_app.bat
                 //"""
 
-                bat """
-                    echo %JAVA_HOME%
-                    echo %PATH%
-                    java -version
-                """
-
-                bat """
-                    cd D:\\Workspace\\Jenkins\\deployments
-                    start /wait cmd /c java -jar jenkins-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1
-                """
+                //bat """
+                //    echo %JAVA_HOME%
+                //    echo %PATH%
+                //    java -version
+                //"""
+//
+                //bat """
+                //    cd D:\\Workspace\\Jenkins\\deployments
+                //    start /wait cmd /c java -jar jenkins-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1
+                //"""
             }
         }
     }
