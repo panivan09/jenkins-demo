@@ -20,14 +20,14 @@ pipeline {
             }
         }
 
-        stages {
-            stage('Print Environment') {
-                steps {
-                    bat 'set' // Для Windows
-                    // sh 'printenv' // Для Linux
-                }
+
+        stage('Print Environment') {
+            steps {
+                bat 'set' // Для Windows
+                // sh 'printenv' // Для Linux
             }
         }
+
 
         stage('Test SSH Connection') {
             steps {
