@@ -20,12 +20,20 @@ pipeline {
             }
         }
 
+        stages {
+            stage('Print Environment') {
+                steps {
+                    bat 'set' // Для Windows
+                    // sh 'printenv' // Для Linux
+                }
+            }
+        }
 
         stage('Test SSH Connection') {
             steps {
                 // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
                 bat """
-                    ssh -T panivan09@raspberry.local 'uname -a'
+                    ssh -tt panivan09@192.168.1.81 'uname -a'
                 """
             }
         }
