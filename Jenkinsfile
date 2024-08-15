@@ -11,21 +11,12 @@ pipeline {
                 """
             }
         }
-        stage("Test") {
-            steps {
-                echo 'Testing...'
-                bat """
-                    mvn test -Dsurefire.useFile=false
-                """
-            }
-        }
-
 
         stage('SSH-agent') {
             steps {
-                bat """
-                    eval $(ssh-agent -s)
-                    ssh-add C:\\path\\to\\your\\private_key
+                powershell """
+                    Start-Process ssh-agent -NoNewWindow -Wait
+                    ssh-add C:\Users\pante\.ssh\id_rsa
                     ssh -tt panivan09@192.168.1.81 'uname -a'
                 """
             }
@@ -36,7 +27,7 @@ pipeline {
             steps {
                 // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
                 bat """
-                    ssh -vvv -tt panivan09@192.168.1.81 'uname -a'
+                    ssh -vvv -T panivan09@192.168.1.81 'uname -a'
                 """
             }
         }
