@@ -25,7 +25,13 @@ pipeline {
                 echo 'Deploying...'
 
                 echo 'Stopping existing service...'
-                bat 'sc stop JenkinsDemoService || echo Service not running || exit 0'
+                script {
+                    try {
+                        bat 'sc stop JenkinsDemoService'
+                    } catch (Exception e) {
+                        echo 'Service not running or failed to stop: ' + e.getMessage()
+                    }
+                }
 
                 echo 'Copying new jar...'
                 bat 'copy target\\jenkins-demo-0.0.1-SNAPSHOT.jar D:\\Workspace\\Jenkins\\deployments\\jenkins-demo-0.0.1-SNAPSHOT.jar'
