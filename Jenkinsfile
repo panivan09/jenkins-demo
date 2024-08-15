@@ -21,10 +21,13 @@ pipeline {
         }
 
 
-        stage('Print Environment') {
+        stage('SSH-agent') {
             steps {
-                bat 'set' // Для Windows
-                // sh 'printenv' // Для Linux
+                bat """
+                    eval $(ssh-agent -s)
+                    ssh-add C:\\path\\to\\your\\private_key
+                    ssh -tt panivan09@192.168.1.81 'uname -a'
+                """
             }
         }
 
@@ -33,7 +36,7 @@ pipeline {
             steps {
                 // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
                 bat """
-                    ssh -tt panivan09@192.168.1.81 'uname -a'
+                    ssh -vvv -tt panivan09@192.168.1.81 'uname -a'
                 """
             }
         }
