@@ -43,7 +43,8 @@ pipeline {
                 //"""
 
                 bat """
-                    where java
+                    echo %JAVA_HOME%
+                    echo %PATH%
                     java -version
                 """
 
