@@ -16,7 +16,7 @@ pipeline {
             steps {
                 powershell """
                     Start-Process ssh-agent -NoNewWindow -Wait
-                    ssh-add C:\Users\pante\.ssh\id_rsa
+                    ssh-add C:\\Users\\pante\\.ssh\\id_rsa
                     ssh -tt panivan09@192.168.1.81 'uname -a'
                 """
             }
