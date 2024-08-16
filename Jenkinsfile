@@ -12,24 +12,24 @@ pipeline {
             }
         }
 
-        stage('SSH-agent') {
-            steps {
-                powershell """
-                    Start-Process ssh-agent -NoNewWindow -Wait
-                    ssh-add C:\\Users\\pante\\.ssh\\id_rsa
-                """
-            }
-        }
-
-
-        //stage('Test SSH Connection') {
+        //stage('SSH-agent') {
         //    steps {
-        //        // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
-        //        bat """
-        //            ssh -i C:\\Users\\pante\\.ssh\\id_rsa -vvv -T panivan09@192.168.1.81 'uname -a'
+        //        powershell """
+        //            Start-Process ssh-agent -NoNewWindow -Wait
+        //            ssh-add C:\\Users\\pante\\.ssh\\id_rsa
         //        """
         //    }
         //}
+
+
+        stage('Test SSH Connection') {
+            steps {
+                // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
+                bat """
+                    ssh -i C:\\Users\\pante\\.ssh\\id_rsa -vvv -T panivan09@192.168.1.81 'uname -a'
+                """
+            }
+        }
 
 
         //stage("Deploy") {
