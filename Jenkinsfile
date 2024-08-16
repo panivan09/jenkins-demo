@@ -13,14 +13,14 @@ pipeline {
         }
 
 
-        stage('SSH-agent') {
-            steps {
-                powershell """
-                    Start-Process ssh-agent -NoNewWindow -Wait
-                    ssh-add C:\\Users\\pante\\.ssh\\id_rsa
-                """
-            }
-        }
+        //stage('SSH-agent') {
+        //    steps {
+        //        powershell """
+        //            Start-Process ssh-agent -NoNewWindow -Wait
+        //            ssh-add C:\\Users\\pante\\.ssh\\id_rsa
+        //        """
+        //    }
+        //}
 
 
         stage('Test SSH Connection') {
