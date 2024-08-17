@@ -59,52 +59,65 @@ pipeline {
         //    }
         //}
 
-        stage('Check File Existence') {
+
+        stage('Check Local File Existence') {
             steps {
                 script {
-                    def remote = [:]
-                    remote.name = 'Raspberry Pi'
-                    remote.host = '192.168.1.81'
-                    remote.user = 'panivan09'
-                    remote.identityFile = SSH_KEY_PATH
-                    remote.allowAnyHosts = true
-
-                    // Проверка существования файла на удалённом сервере
-                    def fileExists = sshCommand remote: remote, command: '[ -f /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar ] && echo "File exists" || echo "File does not exist"'
-
-                    // Логика на основе результата
-                    if (fileExists.contains("File exists")) {
-                        echo "Файл уже существует на сервере."
+                    if (fileExists('target/jenkins-demo-0.0.1-SNAPSHOT.jar')) {
+                        echo 'Файл существует на локальной машине.'
                     } else {
-                        echo "Файл не существует. Выполняется передача файла..."
-
-                        // Копируем JAR файл на удалённый сервер
-                        sshPut remote: remote, from: 'target/jenkins-demo-0.0.1-SNAPSHOT.jar', into: '/home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar'
+                        error 'Файл не существует на локальной машине. Остановить сборку.'
                     }
                 }
             }
         }
 
-        stage('Deploy Application') {
-            steps {
-                script {
-                    def remote = [:]
-                    remote.name = 'Raspberry Pi'
-                    remote.host = '192.168.1.81'
-                    remote.user = 'panivan09'
-                    remote.identityFile = SSH_KEY_PATH
-                    remote.allowAnyHosts = true
-
-                    // Копируем JAR файл на удалённый сервер
-                    sshPut remote: remote, from: 'target/jenkins-demo-0.0.1-SNAPSHOT.jar', into: '/home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar'
-
-                    // Запускаем приложение на удалённом сервере
-                    sshCommand remote: remote, command: '''
-                        nohup java -jar /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar
-                    '''
-                }
-            }
-        }
+        //stage('Check File Existence') {
+        //    steps {
+        //        script {
+        //            def remote = [:]
+        //            remote.name = 'Raspberry Pi'
+        //            remote.host = '192.168.1.81'
+        //            remote.user = 'panivan09'
+        //            remote.identityFile = SSH_KEY_PATH
+        //            remote.allowAnyHosts = true
+//
+        //            // Проверка существования файла на удалённом сервере
+        //            def fileExists = sshCommand remote: remote, command: '[ -f /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar ] && echo "File exists" || echo "File does not exist"'
+//
+        //            // Логика на основе результата
+        //            if (fileExists.contains("File exists")) {
+        //                echo "Файл уже существует на сервере."
+        //            } else {
+        //                echo "Файл не существует. Выполняется передача файла..."
+//
+        //                // Создаем пустой JAR файл на удалённый сервер
+        //                sshCommand remote: remote, command: 'touch /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar'
+        //            }
+        //        }
+        //    }
+        //}
+//
+        //stage('Deploy Application') {
+        //    steps {
+        //        script {
+        //            def remote = [:]
+        //            remote.name = 'Raspberry Pi'
+        //            remote.host = '192.168.1.81'
+        //            remote.user = 'panivan09'
+        //            remote.identityFile = SSH_KEY_PATH
+        //            remote.allowAnyHosts = true
+//
+        //            // Копируем JAR файл на удалённый сервер
+        //            sshPut remote: remote, from: 'target/jenkins-demo-0.0.1-SNAPSHOT.jar', into: '/home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar'
+//
+        //            // Запускаем приложение на удалённом сервере
+        //            sshCommand remote: remote, command: '''
+        //                nohup java -jar /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar
+        //            '''
+        //        }
+        //    }
+        //}
 
 
 
