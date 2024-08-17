@@ -60,7 +60,7 @@ pipeline {
         //}
 
 
-        stage('Check File Existence') {
+        stage('Check Directory and File Existence') {
             steps {
                 script {
                     def remote = [:]
