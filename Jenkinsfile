@@ -27,7 +27,7 @@ pipeline {
             steps {
                 // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
                 bat """
-                    ssh -i C:\\Users\\pante\\.ssh\\id_rsa -vvv panivan09@192.168.1.81 'uname -a'
+                    ssh -i C:\\Users\\pante\\.ssh\\id_rsa panivan09@192.168.1.81 uname -a
                 """
             }
         }
