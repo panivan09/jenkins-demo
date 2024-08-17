@@ -104,6 +104,15 @@ pipeline {
                     remote.identityFile = SSH_KEY_PATH
                     remote.allowAnyHosts = true
 
+                    // Проверка, какой процесс использует порт 8282
+                    def portCheck = sshCommand remote: remote, command: 'lsof -i :8282 | grep LISTEN'
+
+                    if (portCheck) {
+                        // Если порт занят, завершаем процесс
+                        sshCommand remote: remote, command: 'fuser -k 8282/tcp'
+                        echo "The process using port 8282 has terminated."
+                    }
+
                     // Копируем JAR файл на удалённый сервер
                     sshPut remote: remote, from: 'target/jenkins-demo-0.0.1-SNAPSHOT.jar', into: '/home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar'
 
