@@ -105,9 +105,9 @@ pipeline {
                     remote.allowAnyHosts = true
 
                     // Проверка, какой процесс использует порт 8282
-                    def portCheck = sshCommand remote: remote, command: 'lsof -i :8282 | grep LISTEN'
+                    def portCheck = sshCommand remote: remote, command: 'lsof -i :8282 | grep LISTEN || true'
 
-                    if (portCheck) {
+                    if (portCheck.contains("LISTEN")) {
                         // Если порт занят, завершаем процесс
                         sshCommand remote: remote, command: 'fuser -k 8282/tcp'
                         echo "The process using port 8282 has terminated."
