@@ -117,10 +117,10 @@ pipeline {
                     sshPut remote: remote, from: 'target/jenkins-demo-0.0.1-SNAPSHOT.jar', into: '/home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar'
 
                     // Запускаем приложение на удалённом сервере
-                    sshCommand remote: remote, command: '''
-                        nohup java -jar /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar &
-                        exit 0
-                    '''
+                    //sshCommand remote: remote, command: '''
+                    //    nohup java -jar /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar &
+                    //    exit 0
+                    //'''
                 }
             }
         }
