@@ -118,9 +118,9 @@ pipeline {
 
                     // Запускаем приложение на удалённом сервере
                     sshCommand remote: remote, command: '''
-                        //nohup java -jar /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar &
-                        screen -dmS jenkins-demo-session java -jar /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar &
-                        exit
+                        nohup java -jar /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
+                        disown
+                        exit 0
                     '''
                 }
             }
