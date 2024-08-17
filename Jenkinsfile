@@ -87,11 +87,11 @@ pipeline {
 
                     // Логика на основе результата
                     if (fileExists.contains("File exists")) {
-                        echo "Файл уже существует на сервере."
+                        echo "The file exists on the server."
                     } else {
-                        echo "Файл не существует. Выполняется передача файла..."
+                        echo "The file does not exists on the server."
 
-                        // Создаем пустой JAR файл на удалённый сервер
+                        // Создаем пустой JAR файл на удалённый сервере
                         sshCommand remote: remote, command: 'touch /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar'
                     }
                 }
