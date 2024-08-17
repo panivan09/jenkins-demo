@@ -4,7 +4,8 @@ pipeline {
 
     environment {
         // Указываем путь к SSH ключу
-        SSH_KEY_PATH = 'C:\\Users\\pante\\.ssh\\id_rsa'
+        //SSH_KEY_PATH = 'C:\\Users\\pante\\.ssh\\id_rsa'
+        SSH_KEY_PATH = 'C:\\test-ssh\\id_rsa'
     }
 
     stages {
