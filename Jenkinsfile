@@ -60,18 +60,6 @@ pipeline {
         //}
 
 
-        stage('Check Local File Existence') {
-            steps {
-                script {
-                    if (fileExists('target/jenkins-demo-0.0.1-SNAPSHOT.jar')) {
-                        echo 'The file exists on the local machine.'
-                    } else {
-                        error 'The file does not exist on the local machine.'
-                    }
-                }
-            }
-        }
-
         stage('Check File Existence') {
             steps {
                 script {
@@ -81,6 +69,14 @@ pipeline {
                     remote.user = 'panivan09'
                     remote.identityFile = SSH_KEY_PATH
                     remote.allowAnyHosts = true
+
+                    // Проверка существования каталога на удалённом сервере
+                    def dirExists = sshCommand remote: remote, command: '[ -d /home/panivan09/deployments ] && echo "Directory exists" || echo "Directory does not exist"'
+
+                    if (!dirExists.contains("Directory exists")) {
+                        echo "The directory does not exist on the server. Creating directory..."
+                        sshCommand remote: remote, command: 'mkdir -p /home/panivan09/deployments'
+                    }
 
                     // Проверка существования файла на удалённом сервере
                     def fileExists = sshCommand remote: remote, command: '[ -f /home/panivan09/deployments/jenkins-demo-0.0.1-SNAPSHOT.jar ] && echo "File exists" || echo "File does not exist"'
