@@ -2,6 +2,11 @@
 pipeline {
     agent any;
 
+    environment {
+        // Указываем путь к SSH ключу
+        SSH_KEY_PATH = 'C:\\Users\\pante\\.ssh\\id_rsa'
+    }
+
     stages {
         stage("Build") {
             steps {
@@ -23,14 +28,14 @@ pipeline {
         //}
 
 
-        stage('Test SSH Connection') {
-            steps {
-                // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
-                bat """
-                    ssh -i C:\\test-ssh\\id_rsa panivan09@192.168.1.81 uname -a
-                """
-            }
-        }
+       //stage('Test SSH Connection') {
+       //    steps {
+       //        // Параметр -o StrictHostKeyChecking=no отключает проверку ключа хоста, что предотвращает проблемы при первом подключении
+       //        bat """
+       //            ssh -i C:\\test-ssh\\id_rsa panivan09@192.168.1.81 uname -a
+       //        """
+       //    }
+       //}
 
 
         //stage("Deploy") {
@@ -47,5 +52,24 @@ pipeline {
         //        """
         //    }
         //}
+
+
+
+        stage('Setup SSH Connection') {
+            steps {
+                script {
+                    // Настройка удалённого сервера
+                    def remote = [:]
+                    remote.name = 'Raspberry Pi'
+                    remote.host = '192.168.1.81'
+                    remote.user = 'panivan09'
+                    remote.identityFile = SSH_KEY_PATH
+                    remote.allowAnyHosts = true
+
+                    // Тест SSH подключения
+                    sshCommand remote: remote, command: 'uname -a'
+                }
+            }
+        }
     }
 }
